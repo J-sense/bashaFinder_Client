@@ -59,31 +59,6 @@ export const getCurrentUser = async () => {
     return null;
   }
 };
-export const updateRoleAction = async (id: string, role: string) => {
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/admin/users/${id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ role }), // Send role in request body
-      }
-    );
-
-    if (!res.ok) {
-      const errorMessage = await res.text(); // Get error message if response is not OK
-      throw new Error(`Update failed: ${errorMessage}`);
-    }
-
-    const result = await res.json();
-    return result;
-  } catch (error) {
-    console.error("Error updating role:", error);
-    throw error; // Rethrow to handle it in the UI
-  }
-};
 
 export const LogOutAction = async () => {
   (await cookies()).delete("accessToken");

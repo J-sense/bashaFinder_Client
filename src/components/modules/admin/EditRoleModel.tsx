@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -21,19 +22,17 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { updateRoleAction } from "@/services/admin";
+
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-const UpdateRoleModel = ({ userInfo, open, onOpenChange }) => {
+const UpdateRoleModel = ({ userInfo, open, onOpenChange }: any) => {
   const form = useForm();
   const { formState: isSubmitting } = form;
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: any) => {
     try {
-      const role = {
-        role: data.role,
-      };
-      const res = await updateRoleAction(userInfo._id, role);
+      const res = await updateRoleAction(userInfo._id, data?.role);
       console.log(res);
       if (res?.success) {
         toast.success(res?.message);
