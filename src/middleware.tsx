@@ -7,7 +7,7 @@ type Role = keyof typeof roleBasedPrivateRoutes;
 const authRoutes = ["/login", "/register"];
 
 const roleBasedPrivateRoutes = {
-  landlord: [/^\/landlord/],
+  landlord: [/^\/landlord/, /^\/house-listing/],
   tenant: [/^\/tenant/],
   admin: [/^\/admin/],
 };
