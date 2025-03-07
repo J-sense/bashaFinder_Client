@@ -29,3 +29,30 @@ export type TUser = {
   updatedAt: string;
   __v: number;
 };
+export interface Property {
+  available: boolean;
+  bedrooms: number;
+  createdAt: string;
+  description: string;
+  images: string[];
+  landlord: string;
+  location: string;
+  rentAmount: number;
+  title: string;
+  updatedAt: string;
+  _id: string;
+}
+export type TRentalRequest = {
+  _id: string;
+  createdAt: string; // ISO date string
+  updatedAt: string; // ISO date string
+  duration: string;
+  landlordPhone: string;
+  message: string;
+  moveInDate: string; // ISO date string
+  paymentOptionVisible: boolean;
+  property: string; // Property ID
+  status: "pending" | "approved" | "rejected"; // Possible statuses
+  tenant: string; // Tenant ID
+  __v: number;
+};

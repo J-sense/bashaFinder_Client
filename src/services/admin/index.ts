@@ -49,7 +49,7 @@ export const getAllHouseAction = async () => {
 export const updateRoleAction = async (id: string, role: string) => {
   try {
     const accessToken = (await cookies()).get("accessToken")?.value; // Get token
-
+    console.log(accessToken);
     if (!accessToken) {
       throw new Error("No access token found. Please log in.");
     }
@@ -63,7 +63,7 @@ export const updateRoleAction = async (id: string, role: string) => {
           "Content-Type": "application/json",
           Authorization: accessToken, // Send token
         },
-        body: JSON.stringify(role), // Send new role
+        body: JSON.stringify({ role }), // Send new role
       }
     );
 

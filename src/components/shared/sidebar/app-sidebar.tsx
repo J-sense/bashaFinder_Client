@@ -42,7 +42,7 @@ const data = {
         icon: SquareTerminal,
         items: [
           { title: "View Listings", url: "/landlord/listings" },
-          { title: "Edit Listing", url: "/landlord/listings/edit/:listingId" },
+          { title: "Edit Listing", url: "/landlord/listings/:listingId" },
         ],
       },
       {

@@ -2,7 +2,7 @@ import GetAllListings from "@/components/modules/Listings/GetAllListings";
 import { allListings } from "@/services/landlord";
 
 const AllListings = async () => {
-  const data = await allListings();
+  const { data } = await allListings();
   console.log(data);
 
   return (

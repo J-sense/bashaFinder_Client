@@ -75,3 +75,143 @@ export const createHouseListing = async (userData: {
     throw error; // Rethrow error for handling in UI
   }
 };
+export const updateHouseListing = async (
+  userData: Record<string, any>,
+  id: string
+) => {
+  try {
+    const token = (await cookies()).get("accessToken")?.value;
+
+    if (!token) {
+      throw new Error("No access token found. Please log in.");
+    }
+
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/landlords/listings/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        body: JSON.stringify(userData),
+      }
+    );
+
+    if (!res.ok) {
+      const errorMessage = await res.text(); // Capture error message from API response
+      throw new Error(`Update failed: ${errorMessage}`);
+    }
+
+    revalidateTag("HOUSE_LISTINGS"); // Consider renaming if needed
+    return await res.json();
+  } catch (error) {
+    console.error("Error updating house listing:", error.message);
+    throw error; // Rethrow for UI handling
+  }
+};
+
+// src/actions/getAllHouseAction.ts
+export const AllHouseAction = async () => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/landlords/all-houses`,
+      {
+        next: {
+          revalidate: 60,
+        },
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (!res.ok) {
+      throw new Error(`Failed to fetch listings: ${res.statusText}`);
+    }
+
+    return await res.json(); // ✅ Return the fetched listings
+  } catch (error) {
+    console.error("Error fetching listings:", error);
+    return [];
+  }
+};
+export const AllRentalRequestAction = async () => {
+  try {
+    const token = (await cookies()).get("accessToken")?.value;
+
+    if (!token) {
+      throw new Error("No access token found. Please log in.");
+    }
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/landlords/requests`,
+      {
+        next: {
+          revalidate: 60,
+        },
+        method: "GET",
+        headers: {
+          Authorization: token, // Correct format
+        },
+      }
+    );
+
+    if (!res.ok) {
+      throw new Error(`Failed to fetch listings: ${res.statusText}`);
+    }
+
+    return await res.json(); // ✅ Return the fetched listings
+  } catch (error) {
+    console.error("Error fetching listings:", error);
+    return [];
+  }
+};
+export const singProperty = async (id: string) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/landlords/all-houses/${id}`,
+      {
+        method: "GET",
+        // headers: {
+        //   "Content-Type": "application/json",
+        // },
+      }
+    );
+
+    if (!res.ok) {
+      throw new Error(`Failed to fetch listings: ${res.statusText}`);
+    }
+
+    return await res.json(); // ✅ Return the fetched listings
+  } catch (error) {
+    console.error("Error fetching listings:", error);
+    return [];
+  }
+};
+export const updateRentalApproved = async (id: string, status: string) => {
+  try {
+    const token = (await cookies()).get("accessToken")?.value;
+
+    if (!token) {
+      throw new Error("No access token found. Please log in.");
+    }
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/landlords/requests/${id}`,
+      {
+        next: {
+          tags: ["RENTAL"],
+        },
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        body: JSON.stringify({ status }),
+      }
+    );
+    return await res.json();
+  } catch (error) {
+    console.log(error);
+  }
+};

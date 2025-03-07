@@ -1,16 +1,79 @@
+"use client";
+import { Button } from "@/components/ui/button";
 import { BTable } from "@/components/ui/core/BTable";
 import { Apartment } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
+import Image from "next/image";
+import Link from "next/link";
 
 import React from "react";
 
 const GetAllListings = ({ houses }: { houses: Apartment[] }) => {
   const columns: ColumnDef<Apartment>[] = [
     {
+      accessorKey: "_id",
+      header: "ID",
+    },
+    {
       accessorKey: "title",
       header: "Title",
     },
+    {
+      accessorKey: "location",
+      header: "Location",
+    },
+    {
+      accessorKey: "bedrooms",
+      header: "Bedrooms",
+    },
+    {
+      accessorKey: "rentAmount",
+      header: "Rent Amount",
+      cell: ({ row }) => `৳ ${row.original.rentAmount}`,
+    },
+
+    {
+      accessorKey: "available",
+      header: "Available",
+      cell: ({ row }) => (
+        <Link href={`/landlord/listings/${row.original._id}`}>
+          <Button
+            className={`${
+              row.original.available ? "text-green-500" : "text-red-500"
+            }`}
+          >
+            Edit
+          </Button>
+        </Link>
+      ),
+    },
+    {
+      accessorKey: "createdAt",
+      header: "Created At",
+      cell: ({ row }) =>
+        new Date(row.original.createdAt).toLocaleDateString("en-US"),
+    },
+
+    {
+      accessorKey: "images",
+      header: "Images",
+      cell: ({ row }) => (
+        <div className="flex gap-2">
+          {row.original.images.map((img, index) => (
+            <Image
+              key={index}
+              src={img}
+              height={30}
+              width={30}
+              alt={`image-${index}`}
+              className="w-10 h-10 object-cover rounded-b-full"
+            />
+          ))}
+        </div>
+      ),
+    },
   ];
+
   return (
     <div>
       <h1 className="text-3xl font-bold text-black">All House Listing</h1>
