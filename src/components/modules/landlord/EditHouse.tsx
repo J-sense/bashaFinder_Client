@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,17 +12,12 @@ import { Input } from "@/components/ui/input";
 import { updateHouseListing } from "@/services/landlord";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-type TData = {
-  location: string;
-  title: string;
-  rentAmount: number;
-  bedrooms: number;
-};
+
 const UpdateHouseForm = ({ id }: { id: string }) => {
   console.log(id);
   const form = useForm();
   const { formState: isSubmitting } = form;
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: any) => {
     try {
       const updataData = {
         location: data.location,

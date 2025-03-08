@@ -56,3 +56,16 @@ export type TRentalRequest = {
   tenant: string; // Tenant ID
   __v: number;
 };
+export type TBooking = {
+  _id: string;
+  property: string;
+  duration: string;
+  landlordPhone?: string;
+  message: string;
+  moveInDate: string;
+  paymentOptionVisible: boolean;
+  status: "approved" | "pending" | "rejected";
+  tenant: string;
+  createdAt: string;
+  updatedAt: string;
+};

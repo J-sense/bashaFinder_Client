@@ -106,7 +106,7 @@ export const updateHouseListing = async (
     revalidateTag("HOUSE_LISTINGS"); // Consider renaming if needed
     return await res.json();
   } catch (error) {
-    console.error("Error updating house listing:", error.message);
+    console.error("Error updating house listing:", error);
     throw error; // Rethrow for UI handling
   }
 };

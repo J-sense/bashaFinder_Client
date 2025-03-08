@@ -3,7 +3,14 @@
 import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
-export const rentRequestAction = async (info) => {
+export const rentRequestAction = async (info: {
+  tenant: string;
+  property: string;
+  message: string;
+  moveInDate: string;
+  duration: string;
+  landlordPhone: string;
+}) => {
   try {
     const token = (await cookies()).get("accessToken")?.value; // No await needed
 
@@ -35,5 +42,36 @@ export const rentRequestAction = async (info) => {
   } catch (error) {
     console.error("Error in rentRequestAction:", error);
     throw error; // ✅ Throw error for UI handling
+  }
+};
+export const yourRequest = async () => {
+  try {
+    const token = (await cookies()).get("accessToken")?.value; // No need for await
+
+    if (!token) {
+      throw new Error("No access token found. Please log in.");
+    }
+
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/tenants/requests`, // Fixed URL
+      {
+        next: {
+          tags: ["RENTAL"],
+        },
+        method: "GET",
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+
+    if (!res.ok) {
+      throw new Error(`Request failed: ${res.statusText}`);
+    }
+
+    return res.json();
+  } catch (error) {
+    console.error("Error fetching requests:", error);
+    throw error; // Rethrow for handling in UI
   }
 };
