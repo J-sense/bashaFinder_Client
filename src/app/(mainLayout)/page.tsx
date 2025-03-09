@@ -1,10 +1,18 @@
-import { Button } from "@/components/ui/button";
-import React from "react";
+import HeroSection from "@/components/modules/home/herosection/HeroSection";
+import Property from "@/components/modules/home/property/Property";
+import Recomandation from "@/components/modules/home/recomandation/Recomandation";
+import Why from "@/components/modules/home/why/Why";
+import { AllHouseAction } from "@/services/landlord";
 
-const HomePage = () => {
+const HomePage = async () => {
+  const { data } = await AllHouseAction(undefined);
+
   return (
-    <div>
-      <Button>homeee page</Button>
+    <div className="min-h-screen pt-10">
+      <HeroSection />
+      <Recomandation />
+      <Property houses={data} />
+      <Why />
     </div>
   );
 };

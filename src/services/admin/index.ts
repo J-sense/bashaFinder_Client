@@ -22,6 +22,26 @@ export const ViewAllUser = async () => {
     return null; // ✅ Handle errors gracefully
   }
 };
+export const alluser = async () => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_BASE_API}/admin/all-user`;
+    console.log("Fetching from:", url); // Debugging
+    const res = await fetch(url, {
+      method: "GET",
+    });
+
+    if (!res.ok) {
+      const errorText = await res.text(); // Get error details
+      throw new Error(`Failed to fetch users: ${errorText}`);
+    }
+
+    return await res.json();
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    return null;
+  }
+};
+
 export const getAllHouseAction = async () => {
   try {
     const res = await fetch(

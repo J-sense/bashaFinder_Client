@@ -131,7 +131,7 @@ const data = {
       icon: User,
       items: [
         { title: "View Profile", url: "/profile" },
-        { title: "Edit Profile", url: "/profile/edit" },
+        // { title: "Edit Profile", url: "/profile/edit" },
       ],
     },
   ],

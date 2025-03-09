@@ -112,10 +112,28 @@ export const updateHouseListing = async (
 };
 
 // src/actions/getAllHouseAction.ts
-export const AllHouseAction = async () => {
+export const AllHouseAction = async (query: any) => {
+  console.log(query);
+  const params = new URLSearchParams();
+  if (query?.bedrooms) {
+    params.append("bedrooms", query?.bedrooms.toString());
+    // params.append("maxPrice", query?.price.toString());
+  }
+  if (query?.searchTerm) {
+    params.append("searchTerm", query?.searchTerm);
+    // params.append("maxPrice", query?.price.toString());
+  }
+  if (query?.minPrice) {
+    params.append("minPrice", "0");
+  }
+  if (query?.maxPrice) {
+    params.append("maxPrice", query?.maxPrice.toString());
+  }
+
+  console.log(query);
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/landlords/all-houses`,
+      `${process.env.NEXT_PUBLIC_BASE_API}/landlords/all-houses?${params}`,
       {
         next: {
           revalidate: 60,

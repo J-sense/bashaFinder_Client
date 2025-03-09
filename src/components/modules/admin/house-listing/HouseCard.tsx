@@ -5,7 +5,6 @@ import React from "react";
 import defaultImage from "@/assests/project3.webp";
 import Link from "next/link";
 const HouseCard = ({ property }: { property: Property }) => {
-  console.log(property);
   return (
     <Link href={`/listings/${property._id}`} className="cursor-pointer">
       <div className="max-w-sm rounded overflow-hidden shadow-lg bg-white cursor-pointer">
