@@ -66,10 +66,12 @@ export default function Navbar() {
 
         {/* Profile & House Listing Button */}
         <div className="hidden md:flex items-center space-x-6">
-          {user?.role && (
-            <Button className="bg-green-600 hover:bg-green-700 text-white font-semibold px-5 py-2 rounded-lg shadow-md">
-              House Listing
-            </Button>
+          {user?.role == "landlord" && (
+            <Link href={"/house-listing"}>
+              <Button className="bg-green-600 hover:bg-green-700 text-white font-semibold px-5 py-2 rounded-lg shadow-md">
+                House Listing
+              </Button>
+            </Link>
           )}
           {user ? (
             <DropdownMenu>
@@ -86,12 +88,14 @@ export default function Navbar() {
                   My Account
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                  Profile
-                </DropdownMenuItem>
-                <DropdownMenuItem className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                <Link href={"/profile"}>
+                  <DropdownMenuItem className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                    Profile
+                  </DropdownMenuItem>
+                </Link>
+                {/* <DropdownMenuItem className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
                   Billing
-                </DropdownMenuItem>
+                </DropdownMenuItem> */}
                 <DropdownMenuItem className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
                   <Link href={`/${user.role}`}>Dashboard</Link>
                 </DropdownMenuItem>

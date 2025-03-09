@@ -1,5 +1,6 @@
 "use server";
 
+import { UpdateUserPayload } from "@/types";
 import { cookies } from "next/headers";
 
 export const ViewAllUser = async () => {
@@ -153,6 +154,35 @@ export const deleteRentalHouse = async (id: string) => {
     if (!res.ok) {
       const errorMessage = await res.text();
       throw new Error(`Delete failed: ${errorMessage}`);
+    }
+
+    const result = await res.json();
+    return result;
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    throw error;
+  }
+};
+export const updateCredential = async (data: UpdateUserPayload) => {
+  try {
+    const accessToken = (await cookies()).get("accessToken")?.value; // Get token
+
+    if (!accessToken) {
+      throw new Error("No access token found. Please log in.");
+    }
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/editProfile`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: accessToken, // Send token
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!res.ok) {
+      const errorMessage = await res.text();
+      throw new Error(`update failed: ${errorMessage}`);
     }
 
     const result = await res.json();

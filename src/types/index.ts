@@ -69,3 +69,8 @@ export type TBooking = {
   createdAt: string;
   updatedAt: string;
 };
+export interface UpdateUserPayload {
+  oldPassword: string;
+  newPassword?: string;
+  newEmail?: string;
+}

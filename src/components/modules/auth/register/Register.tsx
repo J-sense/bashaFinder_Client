@@ -17,11 +17,12 @@ import {
   SelectItem,
 } from "@/components/ui/select"; // Assuming you have Select from shadcn
 import { registration } from "@/services/authService";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 const Register = () => {
+  const router = useRouter();
   const form = useForm({
     defaultValues: {
       userName: "",
@@ -45,7 +46,7 @@ const Register = () => {
       console.log(res);
       if (res) {
         toast(res.message);
-        redirect("/login");
+        router.push("/login");
       } else {
         toast(res.message);
       }

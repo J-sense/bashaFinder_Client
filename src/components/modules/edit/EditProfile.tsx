@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useForm } from "react-hook-form";
-
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -13,12 +13,31 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { updateCredential } from "@/services/admin";
+import { toast } from "sonner";
 
 const ChangePasswordForm = () => {
   const form = useForm();
   const { formState: isSubmitting } = form;
-  const onSubmit = (data: any) => {
-    console.log("Updated Info:", data);
+  const onSubmit = async (data: any) => {
+    try {
+      console.log(data);
+      const updateData = {
+        oldPassword: data.OldPassword,
+        newPassword: data.NewPassword,
+        newEmail: data.email,
+      };
+      console.log(updateData);
+      const res = await updateCredential(updateData);
+      console.log(res);
+      if (res?.success) {
+        toast.success(res?.message);
+      } else {
+        toast.error(res?.message);
+      }
+    } catch (error: any) {
+      toast.error(error?.message);
+    }
   };
 
   return (
@@ -65,7 +84,7 @@ const ChangePasswordForm = () => {
           />
           <FormField
             control={form.control}
-            name="New password"
+            name="NewPassword"
             rules={{ required: "Password is required" }}
             render={({ field, fieldState }) => (
               <FormItem>
@@ -82,7 +101,7 @@ const ChangePasswordForm = () => {
 
           {/* Submit Button */}
           <Button type="submit" className="w-full">
-            {isSubmitting ? "Logging..." : "Login"}
+            {isSubmitting ? "change" : "changing"}
           </Button>
         </form>
       </Form>
