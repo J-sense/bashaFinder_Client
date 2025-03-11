@@ -6,7 +6,7 @@ import { FieldValues } from "react-hook-form";
 console.log(`${process.env.NEXT_PUBLIC_BASE_API}`);
 export const registration = async (userData: FieldValues) => {
   try {
-    const res = await fetch(`http://localhost:5000/register`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -25,7 +25,7 @@ export const registration = async (userData: FieldValues) => {
     return { success: false, message: error.message }; // Return an object instead of throwing an error
   }
 };
-export const LoginAction = async (userData: FieldValues) => {
+export const LoginAction = async (userData: any) => {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/login`, {
       method: "POST",
@@ -45,8 +45,7 @@ export const LoginAction = async (userData: FieldValues) => {
     }
     return result;
   } catch (error: any) {
-    console.error("Registration Error:", error.message);
-    return { success: false, message: error.message }; // Return an object instead of throwing an error
+    console.log(error); // Return an object instead of throwing an error
   }
 };
 export const getCurrentUser = async () => {

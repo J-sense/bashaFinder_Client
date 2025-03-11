@@ -1,10 +1,20 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { Button } from "@/components/ui/button";
 import { BTable } from "@/components/ui/core/BTable";
 import { TBooking } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 
+import { PaymentModel } from "./PaymentModel";
+import { useState } from "react";
+
 const Booking = ({ booking }: { booking: TBooking[] }) => {
+  const [payment, setPayment] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleModel = (data: any) => {
+    setPayment(data);
+    setIsModalOpen(true);
+  };
   const columns: ColumnDef<TBooking>[] = [
     {
       accessorKey: "property",
@@ -43,7 +53,10 @@ const Booking = ({ booking }: { booking: TBooking[] }) => {
       header: "Action",
       cell: ({ row }) =>
         row.original.status === "approved" ? (
-          <Button className="bg-blue-500 hover:bg-blue-600 text-white">
+          <Button
+            className="bg-blue-500 hover:bg-blue-600 text-white"
+            onClick={() => handleModel(row.original)}
+          >
             Make Payment
           </Button>
         ) : (
@@ -55,6 +68,11 @@ const Booking = ({ booking }: { booking: TBooking[] }) => {
     <div>
       <h1>All Rental Request</h1>
       <BTable columns={columns} data={booking} />
+      <PaymentModel
+        paymentData={payment}
+        open={isModalOpen}
+        onOpenChange={setIsModalOpen}
+      />
     </div>
   );
 };

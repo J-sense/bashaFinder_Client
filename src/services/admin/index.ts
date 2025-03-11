@@ -5,11 +5,11 @@ import { cookies } from "next/headers";
 
 export const ViewAllUser = async () => {
   try {
+    const accessToken = (await cookies()).get("accessToken")!.value;
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/admin/users`, {
       method: "GET",
       headers: {
-        Authorization: (await cookies()).get("accessToken")!.value,
-        "Content-Type": "application/json",
+        Authorization: accessToken,
       },
     });
 
@@ -26,7 +26,7 @@ export const ViewAllUser = async () => {
 export const alluser = async () => {
   try {
     const url = `${process.env.NEXT_PUBLIC_BASE_API}/admin/all-user`;
-    console.log("Fetching from:", url); // Debugging
+    console.log(url);
     const res = await fetch(url, {
       method: "GET",
     });
@@ -38,21 +38,23 @@ export const alluser = async () => {
 
     return await res.json();
   } catch (error) {
-    console.error("Error fetching users:", error);
-    return null;
+    console.log(error);
   }
 };
 
 export const getAllHouseAction = async () => {
   try {
+    const accessToken = (await cookies()).get("accessToken")?.value;
+
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/admin/listings`,
       {
         method: "GET",
         headers: {
-          Authorization: (await cookies()).get("accessToken")!.value,
+          Authorization: accessToken || "", // Fallback to empty string if no token
           "Content-Type": "application/json",
         },
+        cache: "no-store", // ✅ Correct placement
       }
     );
 
@@ -60,10 +62,10 @@ export const getAllHouseAction = async () => {
       throw new Error(`Failed to fetch users: ${res.statusText}`);
     }
 
-    return await res.json(); // ✅ Return the fetched user data
+    return await res.json();
   } catch (error) {
     console.error("Error fetching users:", error);
-    return null; // ✅ Handle errors gracefully
+    return null;
   }
 };
 

@@ -1,4 +1,5 @@
 "use client";
+// app/login/page.js
 
 import { Button } from "@/components/ui/button";
 import {
@@ -12,25 +13,32 @@ import {
 import { Input } from "@/components/ui/input";
 import { LoginAction } from "@/services/authService";
 import { useRouter, useSearchParams } from "next/navigation";
-
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { useMemo } from "react";
+import Link from "next/link";
+import { useUser } from "@/components/context/UserContext";
 
 const Login = () => {
   const searchParams = useSearchParams();
-  const redirect = searchParams.get("redirectPath");
+  const redirect = useMemo(
+    () => searchParams.get("redirectPath"),
+    [searchParams]
+  );
   const router = useRouter();
-
+  const { setIsLoading } = useUser();
   const form = useForm({
     defaultValues: {
       email: "",
       password: "",
     },
   });
+
   const {
     formState: { isSubmitting },
   } = form;
-  const onSubmit = async (data: { email: string; password: string }) => {
+
+  const onSubmit = async (data: FieldValues) => {
     console.log("Login Data:", data);
     try {
       const res = await LoginAction(data);
@@ -41,6 +49,7 @@ const Login = () => {
           router.push(redirect);
         } else {
           router.push("/profile");
+          setIsLoading(false);
         }
       } else {
         toast.error(res?.message);
@@ -95,6 +104,12 @@ const Login = () => {
           <Button type="submit" className="w-full">
             {isSubmitting ? "Logging..." : "Login"}
           </Button>
+          <p>
+            Do not have an account?{" "}
+            <small className="text-blue-500">
+              <Link href="/register">REGISTER</Link>
+            </small>
+          </p>
         </form>
       </Form>
     </div>

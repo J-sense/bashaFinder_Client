@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import RentalRequest from "@/components/modules/landlord/RentalRequest";
 import { AllRentalRequestAction } from "@/services/landlord";
 

@@ -70,15 +70,15 @@ const data = {
         icon: SquareTerminal,
         isActive: true,
       },
-      {
-        title: "Admin Profile",
-        url: "/admin/profile",
-        icon: User,
-        items: [
-          { title: "View Profile", url: "/profile" },
-          { title: "Edit Profile", url: "/profile/edit" },
-        ],
-      },
+      // {
+      //   title: "Admin Profile",
+      //   url: "/admin/profile",
+      //   icon: User,
+      //   items: [
+      //     { title: "View Profile", url: "/profile" },
+      //     { title: "Edit Profile", url: "/profile/edit" },
+      //   ],
+      // },
       {
         title: "User Management",
         url: "/admin/users",

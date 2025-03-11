@@ -113,7 +113,6 @@ export const updateHouseListing = async (
 
 // src/actions/getAllHouseAction.ts
 export const AllHouseAction = async (query: any) => {
-  console.log(query);
   const params = new URLSearchParams();
   if (query?.bedrooms) {
     params.append("bedrooms", query?.bedrooms.toString());

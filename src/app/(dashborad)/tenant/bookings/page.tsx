@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import Booking from "@/components/modules/tenant/Booking";
 import { yourRequest } from "@/services/tenant";
 

@@ -1,12 +1,13 @@
+export const dynamic = "force-dynamic";
 import GetAllUsers from "@/components/modules/admin/GetAllUsers";
 import { ViewAllUser } from "@/services/admin";
 
 const page = async () => {
-  const { date } = await ViewAllUser();
-  console.log(date);
+  const { data } = await ViewAllUser();
+
   return (
     <div className="p-5">
-      <GetAllUsers data={date} />
+      <GetAllUsers data={data} />
     </div>
   );
 };

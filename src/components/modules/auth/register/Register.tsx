@@ -28,7 +28,7 @@ const Register = () => {
       userName: "",
       email: "",
       password: "",
-      role: "landlord", // Default role
+      role: "", // Default role
     },
   });
   const {
@@ -44,7 +44,7 @@ const Register = () => {
       };
       const res = await registration(userInfo);
       console.log(res);
-      if (res) {
+      if (res.success) {
         toast(res.message);
         router.push("/login");
       } else {
@@ -130,12 +130,11 @@ const Register = () => {
           <FormField
             control={form.control}
             name="role"
-            rules={{ required: "Role is required" }}
             render={({ field, fieldState }) => (
               <FormItem>
                 <FormLabel>Role</FormLabel>
                 <FormControl>
-                  <Select {...field}>
+                  <Select onValueChange={field.onChange} value={field.value}>
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Select role" />
                     </SelectTrigger>

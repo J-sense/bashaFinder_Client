@@ -60,9 +60,9 @@ const CreateListingForm: React.FC = () => {
       bedrooms: Number(data.bedrooms), // Convert to number
       images,
     };
-    console.log(rentForm);
+
     const res = await createHouseListing(rentForm);
-    console.log(res);
+
     if (res?.success) {
       toast.success(res?.message);
     } else {
@@ -71,7 +71,7 @@ const CreateListingForm: React.FC = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-8 bg-white rounded-md shadow-md ">
+    <div className="max-w-2xl mx-auto p-8 bg-white rounded-md shadow-md py-20">
       <h1 className="text-2xl font-semibold mb-6">Post a Rental Listing</h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">

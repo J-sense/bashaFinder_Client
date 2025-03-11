@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import GetAllListings from "@/components/modules/Listings/GetAllListings";
 import { allListings } from "@/services/landlord";
 

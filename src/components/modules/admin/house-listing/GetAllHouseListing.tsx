@@ -14,7 +14,7 @@ const GetAllHouseListing = ({ data }: { data: Apartment[] }) => {
   const handleDelete = async (id: string) => {
     try {
       const res = await deleteRentalHouse(id);
-      console.log(res);
+
       if (res?.success) {
         toast.success(res?.message);
       } else {
@@ -69,7 +69,7 @@ const GetAllHouseListing = ({ data }: { data: Apartment[] }) => {
         <Image
           src={img}
           alt="Apartment"
-          className="w-16 h-16 object-cover rounded rounded-full"
+          className="w-16 h-16 object-cover  rounded-full"
           width={30}
           height={30}
         />

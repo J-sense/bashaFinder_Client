@@ -13,6 +13,8 @@ import { rentRequestAction } from "@/services/tenant";
 // Default fallback image
 
 const PropertyDetails = ({ house, id }: { house: any; id: string }) => {
+  const rentAmount = house?.data.rentAmount;
+  console.log(rentAmount);
   const { data: property } = house;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -39,6 +41,7 @@ const PropertyDetails = ({ house, id }: { house: any; id: string }) => {
         moveInDate: moveInDate,
         duration: rentalDuration,
         landlordPhone: phone,
+        rentAmount: rentAmount,
       };
       console.log(rentalData);
       const res = await rentRequestAction(rentalData);

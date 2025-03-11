@@ -17,6 +17,7 @@ type User = {
 };
 
 const GetAllUsers = ({ data }: { data: User[] }) => {
+  console.log(data);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false); // ShadCN modal control
 

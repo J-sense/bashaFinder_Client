@@ -5,7 +5,7 @@ const listings = async ({ searchParams }: { searchParams: SearchParams }) => {
   const query = await searchParams;
 
   const { data } = await AllHouseAction(query);
-  // console.log(data);
+  console.log(data);
   return (
     <div className="container mx-auto py-40">
       <ListingPage data={data} />
