@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { createHouseListing } from "@/services/landlord";
 
 import { Plus } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -28,6 +28,7 @@ export interface FormValues {
 }
 
 const CreateListingForm: React.FC = () => {
+  const [loading, setLoading] = useState(false);
   const form = useForm<FormValues>({
     defaultValues: {
       title: "",
@@ -60,18 +61,25 @@ const CreateListingForm: React.FC = () => {
       bedrooms: Number(data.bedrooms), // Convert to number
       images,
     };
-
+    setLoading(true);
     const res = await createHouseListing(rentForm);
+    console.log(res);
+    try {
+      if (res?.success) {
+        toast.success(res?.message);
+        setLoading(false);
+      } else {
+        toast.error(res?.errorSource[0].message);
 
-    if (res?.success) {
-      toast.success(res?.message);
-    } else {
-      toast.error(res?.message);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-8 bg-white rounded-md shadow-md py-20">
+    <div className="max-w-2xl mx-auto p-8 bg-white rounded-md shadow-md">
       <h1 className="text-2xl font-semibold mb-6">Post a Rental Listing</h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -177,7 +185,7 @@ const CreateListingForm: React.FC = () => {
           />
 
           <Button type="submit" className="w-full">
-            Submit Listing
+            {loading ? "Submitting.." : "Submit Listing"}
           </Button>
         </form>
       </Form>

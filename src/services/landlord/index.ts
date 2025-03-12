@@ -63,10 +63,7 @@ export const createHouseListing = async (userData: {
         body: JSON.stringify(userData),
       }
     );
-    if (!res.ok) {
-      const errorMessage = await res.text(); // Read error message
-      throw new Error(`Update failed: ${errorMessage}`);
-    }
+
     revalidateTag("PRODUCT");
     const result = await res.json();
     return result;

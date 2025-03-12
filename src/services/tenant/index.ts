@@ -30,10 +30,10 @@ export const rentRequestAction = async (info: {
       }
     );
 
-    if (!res.ok) {
-      const errorMessage = await res.text(); // Read error message
-      throw new Error(`Request failed: ${errorMessage}`);
-    }
+    // if (!res.ok) {
+    //   const errorMessage = await res.text(); // Read error message
+    //   throw new Error(`Request failed: ${errorMessage}`);
+    // }
 
     revalidateTag("RENTAL"); // ✅ Ensure it's in a server function
 
@@ -65,9 +65,9 @@ export const yourRequest = async () => {
       }
     );
 
-    if (!res.ok) {
-      throw new Error(`Request failed: ${res.statusText}`);
-    }
+    // if (!res.ok) {
+    //   throw new Error(`Request failed: ${res.statusText}`);
+    // }
 
     return res.json();
   } catch (error) {

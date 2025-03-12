@@ -194,3 +194,64 @@ export const updateCredential = async (data: UpdateUserPayload) => {
     throw error;
   }
 };
+// export const orderAction = async (data) => {
+//   try {
+//     const res = await fetch(
+//       `${process.env.NEXT_PUBLIC_BASE_API}/api/create-checkout-session`,
+//       {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify(data),
+//       }
+//     );
+//     console.log(res);
+//     if (!res.ok) {
+//       const errorMessage = await res.text();
+//       throw new Error(`update failed: ${errorMessage}`);
+//     }
+
+//     const result = await res.json();
+//     return result;
+//   } catch (error) {
+//     console.error("Error deleting user:", error);
+//     throw error;
+//   }
+// };
+export const orderAction = async (paymentInfo: {
+  userId: string | undefined;
+  amount: number;
+}) => {
+  try {
+    // Send a POST request to the backend to create a Stripe checkout session
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/api/create-checkout-session`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(paymentInfo),
+      }
+    );
+
+    // Check if the response is OK
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData?.message || "Failed to create session");
+    }
+
+    // Parse the JSON response
+    const data = await response.json();
+
+    // Check if sessionId exists and return it
+    if (data?.sessionId) {
+      return { sessionId: data.sessionId };
+    }
+    throw new Error("Session creation failed");
+  } catch (error) {
+    console.error("Error creating Stripe checkout session:", error);
+    throw error;
+  }
+};

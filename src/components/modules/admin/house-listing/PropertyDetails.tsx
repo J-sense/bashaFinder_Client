@@ -18,6 +18,7 @@ const PropertyDetails = ({ house, id }: { house: any; id: string }) => {
   const { data: property } = house;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [moveInDate, setMoveInDate] = useState("");
   const [rentalDuration, setRentalDuration] = useState("");
   const [specialRequest, setSpecialRequest] = useState("");
@@ -26,35 +27,41 @@ const PropertyDetails = ({ house, id }: { house: any; id: string }) => {
   const user = useUser();
 
   const handleRequestRental = async () => {
-    try {
-      if (user?.user?.role !== "tenant") {
-        return toast.error("You are not authorized.Please login as a tenant");
-      }
-      if (!agreeToTerms) {
-        alert("You must agree to the terms and conditions.");
-        return;
-      }
-      const rentalData = {
-        tenant: user?.user?.userId,
-        property: id,
-        message: specialRequest,
-        moveInDate: moveInDate,
-        duration: rentalDuration,
-        landlordPhone: phone,
-        rentAmount: rentAmount,
-      };
+    setLoading(true);
+    if (user?.user?.role !== "tenant") {
+      return toast.error("You are not authorized.Please login as a tenant");
+    }
+    if (!agreeToTerms) {
+      alert("You must agree to the terms and conditions.");
+      return;
+    }
+    const rentalData = {
+      tenant: user?.user?.userId,
+      property: id,
+      message: specialRequest,
+      moveInDate: moveInDate,
+      duration: rentalDuration,
+      landlordPhone: phone,
+      rentAmount: rentAmount,
+    };
 
-      const res = await rentRequestAction(rentalData);
-      console.log(res);
+    const res = await rentRequestAction(rentalData);
+    console.log(res.errorSource[0].message);
+    try {
       if (res?.success) {
-        toast.success(res?.message);
+        toast.success(res?.message || "Request successful!");
         setIsModalOpen(false);
+        setLoading(false);
       } else {
-        toast.error(res?.message);
+        setLoading(false);
+        toast.error(res.errorSource[0].message);
       }
     } catch (error) {
       console.log(error);
     }
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   return (
@@ -197,7 +204,7 @@ const PropertyDetails = ({ house, id }: { house: any; id: string }) => {
                 }`}
                 disabled={!agreeToTerms}
               >
-                Submit Request
+                {loading ? "submitting" : " Submit Request"}
               </button>
             </div>
           </div>

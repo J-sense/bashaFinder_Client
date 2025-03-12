@@ -1,4 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
+
+import { loadStripe } from "@stripe/stripe-js";
 import { useUser } from "@/components/context/UserContext";
 import { Button } from "@/components/ui/button";
 import {
@@ -7,89 +10,83 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-} from "@/components/ui/form";
+import { Form, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-
-// import { updateRoleAction } from "@/services/admin";
-
+// import { orderAction } from "@/services/admin";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-// import { toast } from "sonner";
+import { orderAction } from "@/services/admin";
 
-const PaymentModel = ({ paymentData, open, onOpenChange }: any) => {
+// Load Stripe with the publishable key
+const stripePromise = loadStripe(
+  "pk_test_51R0cEKLJ6NnJkDHDAvhwDIv2R7SAzLznZxTDXbR4KmNO9dG71pyiMcHVyzUPJ98KP5ftCamkSctTiMkcaD43qx0f00Fdlko1LE"
+);
+
+const PaymentModal = ({ paymentData, open, onOpenChange }: any) => {
   const rentAmount = paymentData?.rentAmount;
-  const form = useForm();
-  const { formState: isSubmitting } = form;
   const { user } = useUser();
-
-  const onSubmit = async (data: any) => {
-    console.log(data);
-    try {
-      const paymentInfo = {
-        userName: user?.email,
-        rentAmount: rentAmount,
-      };
-      console.log(paymentInfo);
-    } catch (error) {
-      console.log(error);
-    }
-    // try {
-    //   const res = await updateRoleAction(userInfo._id, data?.role);
-    //   console.log(res);
-    //   if (res?.success) {
-    //     toast.success(res?.message);
-    //   } else {
-    //     toast.error(res?.message);
-    //   }
-    // } catch (error) {
-    //   console.error("Failed to update role:", error);
-    // }
+  const form = useForm();
+  const [loading, setLoading] = useState(false);
+  type Tpayment = {
+    userId: string | undefined;
+    amount: number;
   };
+
+  const onSubmit = async () => {
+    setLoading(true);
+    try {
+      const paymentInfo: Tpayment = {
+        userId: user?.email,
+        amount: rentAmount,
+      };
+
+      // Request to backend to create a Stripe checkout session
+      const response = await orderAction(paymentInfo);
+
+      if (response?.sessionId) {
+        const stripe = await stripePromise;
+        if (stripe) {
+          await stripe.redirectToCheckout({ sessionId: response.sessionId });
+        }
+      }
+    } catch (error) {
+      console.error("Payment Error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle></DialogTitle>
+          <DialogTitle>Confirm Payment</DialogTitle>
         </DialogHeader>
 
-        {/* Role Selection */}
+        {/* Payment Form */}
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            {/* Role Selection */}
             <FormField
               control={form.control}
               name="userName"
-              render={({ field }) => (
+              render={() => (
                 <FormItem>
-                  <FormLabel>User Name</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      value={user?.email || ""}
-                      className="w-full"
-                    />
-                  </FormControl>
+                  <FormLabel>User Email</FormLabel>
+                  <Input
+                    value={user?.email || ""}
+                    disabled
+                    className="w-full"
+                  />
                 </FormItem>
               )}
             />
             <FormField
               control={form.control}
               name="Amount"
-              render={({ field }) => (
+              render={() => (
                 <FormItem>
-                  <FormLabel>Username</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      value={rentAmount || ""}
-                      className="w-full"
-                    />
-                  </FormControl>
+                  <FormLabel>Amount</FormLabel>
+                  <Input value={rentAmount || ""} disabled className="w-full" />
                 </FormItem>
               )}
             />
@@ -100,11 +97,12 @@ const PaymentModel = ({ paymentData, open, onOpenChange }: any) => {
                 type="button"
                 variant="outline"
                 onClick={() => onOpenChange(false)}
+                disabled={loading}
               >
                 Cancel
               </Button>
-              <Button type="submit" className="ml-2">
-                {isSubmitting ? "Pay" : "Save Changes"}
+              <Button type="submit" className="ml-2" disabled={loading}>
+                {loading ? "Processing..." : "Pay Now"}
               </Button>
             </div>
           </form>
@@ -114,4 +112,4 @@ const PaymentModel = ({ paymentData, open, onOpenChange }: any) => {
   );
 };
 
-export { PaymentModel };
+export { PaymentModal };

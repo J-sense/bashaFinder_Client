@@ -75,6 +75,7 @@ const RentalRequest = ({
         <div className="flex gap-2">
           <Button
             variant="default"
+            disabled={row.original.status == "approved"}
             onClick={() => handleApprove(row.original._id)}
           >
             Approve

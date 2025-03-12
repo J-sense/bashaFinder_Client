@@ -5,14 +5,14 @@ import { BTable } from "@/components/ui/core/BTable";
 import { TBooking } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 
-import { PaymentModel } from "./PaymentModel";
+// import { PaymentModel } from "./PaymentModel";
 import { useState } from "react";
+import { PaymentModal } from "./PaymentModel";
 
 const Booking = ({ booking }: { booking: TBooking[] }) => {
   const [payment, setPayment] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleModel = (data: any) => {
-    console.log("ss", data);
     setPayment(data);
     setIsModalOpen(true);
   };
@@ -69,7 +69,7 @@ const Booking = ({ booking }: { booking: TBooking[] }) => {
     <div>
       <h1>All Rental Request</h1>
       <BTable columns={columns} data={booking} />
-      <PaymentModel
+      <PaymentModal
         paymentData={payment}
         open={isModalOpen}
         onOpenChange={setIsModalOpen}

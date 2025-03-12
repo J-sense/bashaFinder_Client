@@ -30,7 +30,7 @@ const Profile = ({ userInfo }: { userInfo: TUser }) => {
           </p>
 
           {/* Edit Button with Icon */}
-          <Link href={`/profile/${userInfo._id}`}>
+          <Link href={`/profile/${userInfo?._id}`}>
             <Button className="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center gap-2">
               <Edit size={18} /> Edit Profile
             </Button>
