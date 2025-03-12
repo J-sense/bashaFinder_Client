@@ -12,6 +12,7 @@ const Booking = ({ booking }: { booking: TBooking[] }) => {
   const [payment, setPayment] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleModel = (data: any) => {
+    console.log("ss", data);
     setPayment(data);
     setIsModalOpen(true);
   };

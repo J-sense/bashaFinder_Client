@@ -43,7 +43,7 @@ const PropertyDetails = ({ house, id }: { house: any; id: string }) => {
         landlordPhone: phone,
         rentAmount: rentAmount,
       };
-      console.log(rentalData);
+
       const res = await rentRequestAction(rentalData);
       console.log(res);
       if (res?.success) {

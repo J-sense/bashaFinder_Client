@@ -22,12 +22,22 @@ import { useForm } from "react-hook-form";
 // import { toast } from "sonner";
 
 const PaymentModel = ({ paymentData, open, onOpenChange }: any) => {
-  console.log(paymentData);
+  const rentAmount = paymentData?.rentAmount;
   const form = useForm();
   const { formState: isSubmitting } = form;
   const { user } = useUser();
-  console.log(user);
+
   const onSubmit = async (data: any) => {
+    console.log(data);
+    try {
+      const paymentInfo = {
+        userName: user?.email,
+        rentAmount: rentAmount,
+      };
+      console.log(paymentInfo);
+    } catch (error) {
+      console.log(error);
+    }
     // try {
     //   const res = await updateRoleAction(userInfo._id, data?.role);
     //   console.log(res);
@@ -54,10 +64,9 @@ const PaymentModel = ({ paymentData, open, onOpenChange }: any) => {
             <FormField
               control={form.control}
               name="userName"
-              rules={{ required: "Username is required" }}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Username</FormLabel>
+                  <FormLabel>User Name</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -70,15 +79,14 @@ const PaymentModel = ({ paymentData, open, onOpenChange }: any) => {
             />
             <FormField
               control={form.control}
-              name="userName"
-              rules={{ required: "Username is required" }}
+              name="Amount"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Username</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
-                      // value={ || ""}
+                      value={rentAmount || ""}
                       className="w-full"
                     />
                   </FormControl>
@@ -96,7 +104,7 @@ const PaymentModel = ({ paymentData, open, onOpenChange }: any) => {
                 Cancel
               </Button>
               <Button type="submit" className="ml-2">
-                {isSubmitting ? "Saving..." : "Save Changes"}
+                {isSubmitting ? "Pay" : "Save Changes"}
               </Button>
             </div>
           </form>
