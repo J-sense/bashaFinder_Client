@@ -5,7 +5,7 @@ import { TUser } from "@/types";
 
 const page = async () => {
   const { data } = await alluser();
-  console.log(data);
+
   const user = await getCurrentUser();
   console.log(user.userId);
   const findUser = data.find((item: TUser) => item._id === user.userId);

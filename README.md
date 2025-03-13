@@ -1,36 +1,142 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏡 BasaFinder - Smart Rental & Housing Solution
 
-## Getting Started
+![BasaFinder](https://your-image-url.com/banner.png)
 
-First, run the development server:
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-%23007bff.svg?style=for-the-badge&logo=vercel&logoColor=white)](https://bashafinder-n7tg90lpf-jsenses-projects.vercel.app/)
+[![Backend API](https://img.shields.io/badge/Backend%20API-%2300d09c.svg?style=for-the-badge&logo=node.js&logoColor=white)](https://github.com/J-sense/tasks_api)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+BasaFinder is a full-stack web application designed to streamline the rental process by connecting **Landlords, Tenants, and Admins** in a seamless ecosystem.
+
+---
+
+## 🚀 Features
+
+✅ **Role-Based System:** Admin, Landlord, and Tenant roles with dedicated dashboards.
+✅ **Custom Authentication:** Secure JWT authentication with bcrypt password hashing.
+✅ **Rental Listings:** Landlords can post, update, and delete rental properties.
+✅ **Search & Filter:** Tenants can search by location, price range, and number of bedrooms.
+✅ **Rental Requests:** Tenants can submit requests, which landlords can approve or reject.
+✅ **Integrated Payments:** Stripe/ShurjoPay payment gateways for seamless transactions.
+✅ **Email Notifications:** Automated updates for rental requests and approvals.
+✅ **Mobile-Friendly UI:** Fully responsive and user-friendly design.
+
+---
+
+## 🏗️ Tech Stack
+
+### **Frontend**
+
+- ⚛ **Next.js** (Server-Side Rendering & Static Site Generation)
+- 🔷 **TypeScript** (Type Safety)
+- 🎨 **Tailwind CSS** (Modern Styling)
+- 🔄 **Redux Toolkit** (State Management)
+
+### **Backend**
+
+- 🟢 **Node.js** with **Express.js** (REST APIs)
+- 🍃 **MongoDB** (NoSQL Database)
+- 🔒 **JWT & bcrypt** (Authentication & Security)
+
+### **Deployment**
+
+- 🌐 **Frontend:** Vercel/Netlify
+- 🛠 **Backend:** Heroku/AWS
+
+---
+
+## 📌 User Roles & Functionalities
+
+### **🔹 Admin**
+
+- Manage users (Landlords, Tenants)
+- Oversee all rental listings
+- Edit/remove any listing or user
+
+### **🔹 Landlord**
+
+- Post & manage rental house listings
+- Approve/reject rental requests
+- Initiate payment process
+
+### **🔹 Tenant**
+
+- Search & filter rental listings
+- Submit rental requests
+- Make secure payments upon approval
+
+---
+
+<!-- ## 📸 Screenshots
+
+![Home Page](https://your-image-url.com/homepage.png)
+![Dashboard](https://your-image-url.com/dashboard.png)
+
+--- -->
+
+## 🎯 API Endpoints
+
+### **🔹 Tenant Routes**
+
+```http
+POST /tenants/requests       # Create a rental request
+GET  /tenants/requests       # Retrieve submitted rental requests
+PUT  /tenants/profile        # Update tenant profile
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### **🔹 Landlord Routes**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```http
+POST   /landlords/listings   # Add a rental listing
+GET    /landlords/listings   # Get all listings by landlord
+PUT    /landlords/listings/:id   # Update a listing
+DELETE /landlords/listings/:id   # Delete a listing
+GET    /landlords/requests   # View rental requests
+PUT    /landlords/requests/:id  # Approve/reject rental request
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### **🔹 Admin Routes**
 
-## Learn More
+```http
+GET    /admin/users          # Get all users
+PUT    /admin/users/:id      # Update user roles
+DELETE /admin/user/:id       # Remove a user
+GET    /admin/listings       # Get all rental listings
+PUT    /admin/listings/:id   # Moderate a listing
+DELETE /admin/listings/:id   # Remove a listing
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🚀 Getting Started
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### **🌐 Run Frontend**
 
-## Deploy on Vercel
+```bash
+npm run dev  # Starts frontend on localhost:3000
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### **🛠 Run Backend**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+cd backend
+npm install
+npm start  # Runs backend on localhost:4000
+```
+
+---
+
+## 📜 License
+
+This project is licensed under the **MIT License**.
+
+---
+
+## 📞 Contact & Support
+
+For issues or suggestions, feel free to **open an issue** or contact us:
+📧 **Email:** [support@basafinder.com](jishan1873@gmail.com)
+
+<!-- 🌍 **Website:** [basafinder.com](https://your-live-demo-link.com)
+📢 **Twitter:** [@basafinder](https://twitter.com/basafinder) -->
+
+Happy Coding! 🚀

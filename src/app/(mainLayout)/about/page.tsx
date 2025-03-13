@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import profile from "@/assests/profile.jpg";
+import profile from "@/assests/my.jpg";
 import {
   Facebook,
   Linkedin,
@@ -89,7 +89,7 @@ export default function AboutPage() {
               <Image
                 src={member.image}
                 alt={member.name}
-                className="w-24 h-24 mx-auto rounded-full"
+                className="w-20 h-20 mx-auto rounded-full"
               />
               <h3 className="mt-4 text-lg font-semibold text-gray-800 dark:text-white">
                 {member.name}
@@ -115,26 +115,35 @@ export default function AboutPage() {
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-6">
           <a
-            href="mailto:contact@bashafinder.com"
+            href="mailto:jishan1873@gmail.com"
             className="flex items-center gap-2 text-gray-700 dark:text-white"
           >
             <MessageCircle className="text-xl" /> contact@bashafinder.com
           </a>
           <a
-            href="tel:+8801234567890"
+            href="tel:+8801405438389"
             className="flex items-center gap-2 text-gray-700 dark:text-white"
           >
             <Phone className="text-xl" /> +880 123 456 7890
           </a>
         </div>
         <div className="mt-6 flex justify-center gap-6 text-gray-700 dark:text-white text-2xl">
-          <a href="#" className="hover:text-blue-600">
+          <a
+            href="https://www.facebook.com/mdnajmulhasan.jishan/"
+            className="hover:text-blue-600"
+          >
             <Facebook />
           </a>
-          <a href="#" className="hover:text-blue-400">
+          <a
+            href="https://www.facebook.com/mdnajmulhasan.jishan/"
+            className="hover:text-blue-400"
+          >
             <Twitter />
           </a>
-          <a href="#" className="hover:text-blue-700">
+          <a
+            href="https://www.linkedin.com/in/najmul-hasan-222b43273/"
+            className="hover:text-blue-700"
+          >
             <Linkedin />
           </a>
         </div>

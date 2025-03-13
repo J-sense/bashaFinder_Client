@@ -35,10 +35,10 @@ export const LoginAction = async (userData: any) => {
       body: JSON.stringify(userData),
     });
 
-    if (!res.ok) {
-      const errorMessage = await res.text(); // Get error message if response is not OK
-      throw new Error(`Registration failed: ${errorMessage}`);
-    }
+    // if (!res.ok) {
+    //   const errorMessage = await res.text(); // Get error message if response is not OK
+    //   throw new Error(`Registration failed: ${errorMessage}`);
+    // }
     const result = await res.json();
     if (result.token) {
       (await cookies()).set("accessToken", result.token);

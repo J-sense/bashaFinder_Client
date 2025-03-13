@@ -49,7 +49,7 @@ const Login = () => {
           router.push(redirect);
         } else {
           router.push("/profile");
-          setIsLoading(false);
+          setIsLoading(true);
         }
       } else {
         toast.error(res?.message);

@@ -51,22 +51,22 @@ const data = {
         icon: Bot,
         items: [{ title: "View Requests", url: "/landlord/rental-requests" }],
       },
-      {
-        title: "Payment Requests",
-        url: "/landlord/payment-request",
-        icon: SquareTerminal,
-        items: [
-          {
-            title: "Initiate Payment Request",
-            url: "/landlord/payment-request",
-          },
-        ],
-      },
+      // {
+      //   title: "Payment Requests",
+      //   url: "/landlord/payment-request",
+      //   icon: SquareTerminal,
+      //   items: [
+      //     {
+      //       title: "Initiate Payment Request",
+      //       url: "/landlord/payment-request",
+      //     },
+      //   ],
+      // },
     ],
     admin: [
       {
         title: "Dashboard",
-        url: "/admin/dashboard",
+        url: "/admin",
         icon: SquareTerminal,
         isActive: true,
       },
@@ -85,7 +85,7 @@ const data = {
         icon: Settings2,
         items: [
           { title: "Manage Users", url: "/admin/users" },
-          { title: "Edit User", url: "/admin/users/edit/:userId" },
+          // { title: "Edit User", url: "/admin/users/edit/:userId" },
         ],
       },
       {
@@ -101,7 +101,7 @@ const data = {
     tenant: [
       {
         title: "Dashboard",
-        url: "/tenant/dashboard",
+        url: "/tenant",
         icon: SquareTerminal,
         isActive: true,
       },
@@ -114,12 +114,12 @@ const data = {
           { title: "Cancel Booking", url: "/tenant/bookings/cancel" },
         ],
       },
-      {
-        title: "Payment History",
-        url: "/tenant/payments",
-        icon: SquareTerminal,
-        items: [{ title: "View Payments", url: "/tenant/payments" }],
-      },
+      // {
+      //   title: "Payment History",
+      //   url: "/tenant/payments",
+      //   icon: SquareTerminal,
+      //   items: [{ title: "View Payments", url: "/tenant/payments" }],
+      // },
     ],
   },
 
