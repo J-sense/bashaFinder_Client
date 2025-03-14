@@ -115,13 +115,7 @@ DELETE /admin/listings/:id   # Remove a listing
 npm run dev  # Starts frontend on localhost:3000
 ```
 
-### **🛠 Run Backend**
 
-```bash
-cd backend
-npm install
-npm start  # Runs backend on localhost:4000
-```
 
 ---
 
@@ -134,7 +128,7 @@ This project is licensed under the **MIT License**.
 ## 📞 Contact & Support
 
 For issues or suggestions, feel free to **open an issue** or contact us:
-📧 **Email:** [support@basafinder.com](jishan1873@gmail.com)
+📧 **Email:** [jishan1873@gmail.com](jishan1873@gmail.com)
 
 <!-- 🌍 **Website:** [basafinder.com](https://your-live-demo-link.com)
 📢 **Twitter:** [@basafinder](https://twitter.com/basafinder) -->
