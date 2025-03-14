@@ -39,8 +39,8 @@ BasaFinder is a full-stack web application designed to streamline the rental pro
 
 ### **Deployment**
 
-- 🌐 **Frontend:** Vercel/Netlify
-- 🛠 **Backend:** Heroku/AWS
+- 🌐 **Frontend:** Vercel
+- 🛠 **Backend:** Vercel
 
 ---
 
