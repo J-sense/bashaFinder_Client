@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 import { jwtDecode } from "jwt-decode";
+import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";
 console.log(`${process.env.NEXT_PUBLIC_BASE_API}`);
@@ -18,7 +19,7 @@ export const registration = async (userData: FieldValues) => {
       const errorMessage = await res.text(); // Get error message if response is not OK
       throw new Error(`Registration failed: ${errorMessage}`);
     }
-
+    revalidateTag("USER");
     return await res.json();
   } catch (error: any) {
     console.error("Registration Error:", error.message);

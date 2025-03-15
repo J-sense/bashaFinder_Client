@@ -6,7 +6,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { UpdateRoleModel } from "./EditRoleModel"; // Import ShadCN Modal
 import { Button } from "@/components/ui/button";
 import { Trash } from "lucide-react";
-import { deleteUserAction } from "@/services/admin";
+import { activeAction, deleteUserAction } from "@/services/admin";
 import { toast } from "sonner";
 
 type User = {
@@ -14,6 +14,7 @@ type User = {
   username: string;
   email: string;
   role: "admin" | "landlord" | "tenant";
+  isActive: boolean;
 };
 
 const GetAllUsers = ({ data }: { data: User[] }) => {
@@ -24,6 +25,21 @@ const GetAllUsers = ({ data }: { data: User[] }) => {
   const handleOpenModal = (user: User) => {
     setSelectedUser(user);
     setIsModalOpen(true); // Open the modal
+  };
+
+  const handleInActive = async (user: User) => {
+    console.log(user);
+    try {
+      const res = await activeAction(user._id);
+      console.log(res);
+      if (res?.success) {
+        toast.success(res?.message);
+      } else {
+        toast.error(res?.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   const handleDelete = async (id: string) => {
     const res = await deleteUserAction(id);
@@ -66,6 +82,20 @@ const GetAllUsers = ({ data }: { data: User[] }) => {
       cell: ({ row }) => (
         <Button variant="outline" className="px-4">
           {row.original.role}
+        </Button>
+      ),
+    },
+    {
+      accessorKey: "act",
+      header: "Action",
+      cell: ({ row }) => (
+        <Button
+          variant="outline"
+          className="px-4"
+          disabled={row.original.isActive == false}
+          onClick={() => handleInActive(row.original)}
+        >
+          {row.original.isActive ? " Click to Inactive" : "InActivate"}
         </Button>
       ),
     },

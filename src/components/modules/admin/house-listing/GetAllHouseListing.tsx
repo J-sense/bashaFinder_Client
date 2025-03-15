@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 // import { BTable } from "@/components/ui/core/BTable";
 import { BTable } from "@/components/ui/core/BTable";
@@ -5,18 +6,21 @@ import { Apartment } from "@/types/index";
 import { ColumnDef } from "@tanstack/react-table";
 import img from "@/assests/project3.webp";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import { deleteRentalHouse } from "@/services/admin";
 import { toast } from "sonner";
 
 const GetAllHouseListing = ({ data }: { data: Apartment[] }) => {
+  const [loading, setLoading] = useState(false);
   // Adjust the import path as needed
   const handleDelete = async (id: string) => {
     try {
+      // setLoading(true);
       const res = await deleteRentalHouse(id);
 
       if (res?.success) {
         toast.success(res?.message);
+        // setLoading(true);
       } else {
         toast.error(res?.message);
       }
@@ -94,7 +98,7 @@ const GetAllHouseListing = ({ data }: { data: Apartment[] }) => {
             className="bg-red-500 text-white px-2 py-1 rounded"
             onClick={() => handleDelete(row.original._id)}
           >
-            Delete
+            {loading ? "deleting" : "delete"}
           </button>
         </div>
       ),

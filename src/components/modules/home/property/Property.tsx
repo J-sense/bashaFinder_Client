@@ -17,7 +17,7 @@ const Property = ({ houses }: { houses: Tproperty[] }) => {
 
       {/* Property Cards Grid */}
       <div className="grid grid-cols-1 justify-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {houses.slice(0, 4).map((house, index) => (
+        {houses?.slice(0, 4).map((house, index) => (
           <HouseCard property={house} key={index} />
         ))}
       </div>

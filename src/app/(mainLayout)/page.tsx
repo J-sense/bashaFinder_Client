@@ -6,7 +6,7 @@ import { AllHouseAction } from "@/services/landlord";
 
 const HomePage = async () => {
   const { data } = await AllHouseAction(undefined);
-
+  console.log(data);
   return (
     <div className="min-h-screen pt-10">
       <HeroSection />

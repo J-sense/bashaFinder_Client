@@ -40,7 +40,7 @@ const CreateListingForm: React.FC = () => {
     },
   });
   const { user } = useUser();
-  console.log(user);
+
   const { append, fields } = useFieldArray({
     control: form.control,
     name: "images",
@@ -51,6 +51,9 @@ const CreateListingForm: React.FC = () => {
   };
 
   const onSubmit = async (data: FormValues) => {
+    if (user?.role == "landlord") {
+      return toast.error("Only landlord can create the house");
+    }
     const images = data.images.map((img) => img.value);
     const rentForm = {
       landlord: user?.userId,
