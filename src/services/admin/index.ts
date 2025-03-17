@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
-import { UpdateUserPayload } from "@/types";
+import { UpdateUser, UpdateUserPayload } from "@/types";
 import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";
@@ -221,6 +221,41 @@ export const deleteRentalHouse = async (id: string) => {
     throw error;
   }
 };
+export const approvalAction = async (id: string, approved: string) => {
+  try {
+    const accessToken = (await cookies()).get("accessToken")?.value; // Get token
+
+    if (!accessToken) {
+      throw new Error("No access token found. Please log in.");
+    }
+
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/admin/listings/${id}`,
+      {
+        next: {
+          tags: ["HOUSE"],
+        },
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: accessToken, // Send token
+        },
+        body: JSON.stringify({ approved }),
+      }
+    );
+
+    if (!res.ok) {
+      const errorMessage = await res.text();
+      throw new Error(`update failed: ${errorMessage}`);
+    }
+    revalidateTag("HOUSE");
+    const result = await res.json();
+    return result;
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    throw error;
+  }
+};
 export const createHouseListing = async (userData: {
   images: string[];
   title: string;
@@ -277,6 +312,33 @@ export const updateCredential = async (data: UpdateUserPayload) => {
       const errorMessage = await res.text();
       throw new Error(`update failed: ${errorMessage}`);
     }
+
+    const result = await res.json();
+    return result;
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    throw error;
+  }
+};
+export const updateProfile = async (data: UpdateUser, id: string) => {
+  try {
+    const accessToken = (await cookies()).get("accessToken")?.value; // Get token
+
+    if (!accessToken) {
+      throw new Error("No access token found. Please log in.");
+    }
+
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/profile/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: accessToken, // Send token
+        },
+        body: JSON.stringify(data),
+      }
+    );
 
     const result = await res.json();
     return result;

@@ -100,7 +100,7 @@ export const updateHouseListing = async (
       throw new Error(`Update failed: ${errorMessage}`);
     }
 
-    revalidateTag("HOUSE_LISTINGS"); // Consider renaming if needed
+    revalidateTag("LISTINGS"); // Consider renaming if needed
     return await res.json();
   } catch (error) {
     console.error("Error updating house listing:", error);
@@ -224,6 +224,7 @@ export const updateRentalApproved = async (id: string, status: string) => {
         body: JSON.stringify({ status }),
       }
     );
+    revalidateTag("RENTAL");
     return await res.json();
   } catch (error) {
     console.log(error);

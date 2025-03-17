@@ -51,7 +51,7 @@ const CreateListingForm: React.FC = () => {
   };
 
   const onSubmit = async (data: FormValues) => {
-    if (user?.role == "landlord") {
+    if (user?.role == "tenant" || user?.role == "admin") {
       return toast.error("Only landlord can create the house");
     }
     const images = data.images.map((img) => img.value);

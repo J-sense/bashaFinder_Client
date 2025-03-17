@@ -47,6 +47,7 @@ const Login = () => {
         toast.success(res?.message);
         if (redirect) {
           router.push(redirect);
+          setIsLoading(true);
         } else {
           router.push("/profile");
           setIsLoading(true);

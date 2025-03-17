@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { BTable } from "@/components/ui/core/BTable";
 import { Apartment } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
+import { Edit2Icon, House } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -39,10 +40,10 @@ const GetAllListings = ({ houses }: { houses: Apartment[] }) => {
         <Link href={`/landlord/listings/${row.original._id}`}>
           <Button
             className={`${
-              row.original.available ? "text-green-500" : "text-red-500"
+              row.original.available ? "text-white" : "text-red-500"
             }`}
           >
-            Edit
+            Edit <Edit2Icon />
           </Button>
         </Link>
       ),
@@ -59,16 +60,13 @@ const GetAllListings = ({ houses }: { houses: Apartment[] }) => {
       header: "Images",
       cell: ({ row }) => (
         <div className="flex gap-2">
-          {row.original.images.map((img, index) => (
-            <Image
-              key={index}
-              src={img}
-              height={30}
-              width={30}
-              alt={`image-${index}`}
-              className="w-10 h-10 object-cover rounded-b-full"
-            />
-          ))}
+          <Image
+            src={row.original?.images[0]}
+            height={30}
+            width={30}
+            alt={`image`}
+            className="w-10 h-10 object-cover rounded-full"
+          />
         </div>
       ),
     },
@@ -76,7 +74,13 @@ const GetAllListings = ({ houses }: { houses: Apartment[] }) => {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-black">All House Listing</h1>
+      <div className="flex justify-between mb-5 items-center">
+        <h1 className="text-3xl font-bold text-black">All House Listing</h1>
+        <Link href={`/house-listing`}></Link>
+        <Button variant="default">
+          Add a <House />
+        </Button>
+      </div>
       <BTable columns={columns} data={houses} />
 
       {/* Pass selected user data & control modal state */}

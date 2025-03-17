@@ -13,36 +13,41 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { updateCredential } from "@/services/admin";
+import { TUser } from "@/types";
+import { updateProfile } from "@/services/admin";
 import { toast } from "sonner";
-import { useUser } from "@/components/context/UserContext";
+import { useState } from "react";
+// import { alluser, updateCredential } from "@/services/admin";
 
-const ChangePasswordForm = () => {
-  const { user } = useUser();
-  console.log(user);
+const EditProfile = ({ user }: { user: TUser }) => {
+  const [loading, setLoading] = useState(false);
   const form = useForm({
     defaultValues: {
-      email: user?.email || "", // Set default email if available
-      OldPassword: "",
-      NewPassword: "",
+      email: user?.email || "",
+      username: user?.username || "", // Set default email if available
     },
   });
-  const { formState: isSubmitting } = form;
-  const onSubmit = async (data: any) => {
+  type TupdateData = {
+    username: string;
+    email: string;
+  };
+  // const { formState: isSubmitting } = form;
+  const onSubmit = async (info: any) => {
     try {
-      console.log(data);
-      const updateData = {
-        oldPassword: data.OldPassword,
-        newPassword: data.NewPassword,
-        newEmail: data.email,
+      setLoading(true);
+      const updateData: TupdateData = {
+        username: info.username,
+        email: info.email,
       };
-      console.log(updateData);
-      const res = await updateCredential(updateData);
-      console.log(res);
+
+      const res = await updateProfile(updateData, user._id);
+      console.log(res.message);
       if (res?.success) {
         toast.success(res?.message);
+        setLoading(false);
       } else {
         toast.error(res?.message);
+        setLoading(false);
       }
     } catch (error: any) {
       toast.error(error?.message);
@@ -57,6 +62,26 @@ const ChangePasswordForm = () => {
           className="bg-white p-6 shadow-lg rounded-lg w-96 space-y-4"
         >
           {/* Email Field */}
+          <FormField
+            control={form.control}
+            name="username"
+            render={({ field, fieldState }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    type="text"
+                    autoComplete="off"
+                  />
+                </FormControl>
+                {fieldState?.error && (
+                  <FormMessage>{fieldState.error.message}</FormMessage>
+                )}
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="email"
@@ -78,43 +103,8 @@ const ChangePasswordForm = () => {
             )}
           />
 
-          {/* Password Field */}
-          <FormField
-            control={form.control}
-            name="OldPassword"
-            rules={{ required: "Password is required" }}
-            render={({ field, fieldState }) => (
-              <FormItem>
-                <FormLabel>Previous Password</FormLabel>
-                <FormControl>
-                  <Input {...field} value={field.value || ""} type="password" />
-                </FormControl>
-                {fieldState?.error && (
-                  <FormMessage>{fieldState.error.message}</FormMessage>
-                )}
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="NewPassword"
-            rules={{ required: "Password is required" }}
-            render={({ field, fieldState }) => (
-              <FormItem>
-                <FormLabel>New Password</FormLabel>
-                <FormControl>
-                  <Input {...field} value={field.value || ""} type="password" />
-                </FormControl>
-                {fieldState?.error && (
-                  <FormMessage>{fieldState.error.message}</FormMessage>
-                )}
-              </FormItem>
-            )}
-          />
-
-          {/* Submit Button */}
           <Button type="submit" className="w-full">
-            {isSubmitting ? "change" : "changing"}
+            {loading ? "changing..." : "change"}
           </Button>
         </form>
       </Form>
@@ -122,4 +112,4 @@ const ChangePasswordForm = () => {
   );
 };
 
-export default ChangePasswordForm;
+export default EditProfile;

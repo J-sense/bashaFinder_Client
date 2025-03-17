@@ -10,12 +10,19 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { updateHouseListing } from "@/services/landlord";
+import { Apartment } from "@/types";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-const UpdateHouseForm = ({ id }: { id: string }) => {
-  console.log(id);
-  const form = useForm();
+const UpdateHouseForm = ({ id, house }: { id: string; house: Apartment }) => {
+  const form = useForm({
+    defaultValues: {
+      title: house.title,
+      location: house.location,
+      rentAmount: house.rentAmount,
+      bedrooms: house.bedrooms,
+    },
+  });
   const { formState: isSubmitting } = form;
   const onSubmit = async (data: any) => {
     try {

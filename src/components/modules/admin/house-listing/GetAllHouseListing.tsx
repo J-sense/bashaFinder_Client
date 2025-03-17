@@ -7,8 +7,9 @@ import { ColumnDef } from "@tanstack/react-table";
 import img from "@/assests/project3.webp";
 import Image from "next/image";
 import React, { useState } from "react";
-import { deleteRentalHouse } from "@/services/admin";
+import { approvalAction, deleteRentalHouse } from "@/services/admin";
 import { toast } from "sonner";
+import { Badge } from "@/components/ui/badge";
 
 const GetAllHouseListing = ({ data }: { data: Apartment[] }) => {
   const [loading, setLoading] = useState(false);
@@ -28,12 +29,27 @@ const GetAllHouseListing = ({ data }: { data: Apartment[] }) => {
       console.log(error);
     }
   };
+  const handleReject = async (id: string) => {
+    const approved = "rejected";
+    try {
+      // setLoading(true);
+      const res = await approvalAction(id, approved);
+
+      if (res?.success) {
+        toast.success(res?.message);
+        // setLoading(true);
+      } else {
+        toast.error(res?.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const columns: ColumnDef<Apartment>[] = [
     {
       accessorKey: "title",
       header: "Title",
     },
-
     {
       accessorKey: "location",
       header: "Location",
@@ -48,46 +64,43 @@ const GetAllHouseListing = ({ data }: { data: Apartment[] }) => {
       header: "Bedrooms",
     },
     {
-      accessorKey: "available",
-      header: "Available",
+      accessorKey: "approved",
+      header: "Approval",
       cell: ({ row }) => (
-        <span
-          className={
-            row.original.available
-              ? "text-green-500"
-              : "text-red-500 text-center"
-          }
-        >
-          {row.original.available ? "Yes" : "No"}
-        </span>
+        <div className="flex gap-2">
+          <button
+            // onClick={() => handleApprove(row.original._id)}
+            disabled={row.original.approved == "rejected"}
+            className="px-4 text-center"
+          >
+            <Badge>{row.original.approved}</Badge>
+          </button>
+          <button
+            className={`px-2 py-1 rounded ${
+              row.original.approved === "rejected"
+                ? "bg-gray-300 cursor-not-allowed"
+                : "bg-red-500 text-white cursor-pointer"
+            }`}
+            onClick={() => handleReject(row.original._id)}
+            disabled={row.original.approved === "rejected"}
+          >
+            Click to Reject
+          </button>
+        </div>
       ),
     },
     // {
-    //   accessorKey: "landlord",
-    //   header: "Landlord ID",
-    // },
-    {
-      accessorKey: "images",
-      header: "Images",
-      cell: () => (
-        <Image
-          src={img}
-          alt="Apartment"
-          className="w-16 h-16 object-cover  rounded-full"
-          width={30}
-          height={30}
-        />
-      ),
-    },
-    // {
-    //   accessorKey: "createdAt",
-    //   header: "Created At",
-    //   cell: ({ row }) => new Date(row.original.createdAt).toLocaleDateString(),
-    // },
-    // {
-    //   accessorKey: "updatedAt",
-    //   header: "Updated At",
-    //   cell: ({ row }) => new Date(row.original.updatedAt).toLocaleDateString(),
+    //   accessorKey: "images",
+    //   header: "Images",
+    //   cell: ({ row }) => (
+    //     <Image
+    //       src={row.original.images?.[0] || "/default.jpg"} // Use first image or default
+    //       alt="Apartment"
+    //       className="w-16 h-16 object-cover rounded-full"
+    //       width={30}
+    //       height={30}
+    //     />
+    //   ),
     // },
     {
       accessorKey: "actions",
@@ -98,7 +111,7 @@ const GetAllHouseListing = ({ data }: { data: Apartment[] }) => {
             className="bg-red-500 text-white px-2 py-1 rounded"
             onClick={() => handleDelete(row.original._id)}
           >
-            {loading ? "deleting" : "delete"}
+            Delete
           </button>
         </div>
       ),

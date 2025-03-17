@@ -89,7 +89,7 @@ const data = {
         ],
       },
       {
-        title: "Rental H. Management",
+        title: "Listing oversight",
         url: "/admin/users",
         icon: Settings2,
         items: [

@@ -5,6 +5,9 @@ import defaultImage from "@/assests/project3.webp";
 import Link from "next/link";
 
 const HouseCard = ({ property }: { property: Property }) => {
+  // ✅ Show card only if property is approved
+  if (property.approved !== "approved") return null;
+
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg bg-white cursor-pointer">
       <Link href={`/listings/${property._id}`} className="cursor-pointer">

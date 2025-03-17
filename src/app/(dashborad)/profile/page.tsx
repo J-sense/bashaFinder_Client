@@ -7,9 +7,9 @@ const page = async () => {
   const { data } = await alluser();
 
   const user = await getCurrentUser();
-  console.log(user.userId);
+
   const findUser = data.find((item: TUser) => item._id === user.userId);
-  console.log(findUser);
+
   return (
     <div>
       <Profile userInfo={findUser} />

@@ -8,7 +8,7 @@ const authRoutes = ["/login", "/register"];
 
 const roleBasedPrivateRoutes = {
   landlord: [/^\/landlord/, /^\/house-listing/],
-  tenant: [/^\/tenant/],
+  tenant: [/^\/tenant/], // Matches only `/listings/:id`, not `/listings`
   admin: [/^\/admin/],
 };
 
@@ -23,7 +23,7 @@ export const middleware = async (request: NextRequest) => {
     } else {
       return NextResponse.redirect(
         new URL(
-          `http://localhost:3000/login?redirectPath=${pathname}`,
+          `https://bashafinder.vercel.app/login?redirectPath=${pathname}`,
           request.url
         )
       );
@@ -45,9 +45,11 @@ export const config = {
     "/login",
     "/create-shop",
     "/admin",
+    "/house-listing",
     "/admin/:page",
     "/user",
     "/tenant/:page",
     "/landlord/:page",
+    // "/listing/:id",
   ],
 };

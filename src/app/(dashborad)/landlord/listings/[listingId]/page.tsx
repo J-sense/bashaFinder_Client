@@ -1,4 +1,6 @@
 import UpdateHouseForm from "@/components/modules/landlord/EditHouse";
+import { allListings } from "@/services/landlord";
+import { Apartment } from "@/types";
 
 const EditPage = async ({
   params,
@@ -6,10 +8,12 @@ const EditPage = async ({
   params: Promise<{ listingId: string }>;
 }) => {
   const { listingId } = await params;
-  console.log(listingId);
+  const { data } = await allListings();
+  const findProduct = data.find((pr: Apartment) => pr._id == listingId);
+  console.log(findProduct);
   return (
     <div className="my-24">
-      <UpdateHouseForm id={listingId} />
+      <UpdateHouseForm id={listingId} house={findProduct} />
     </div>
   );
 };

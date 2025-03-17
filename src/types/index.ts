@@ -8,6 +8,7 @@ export type IUser = {
 export type Apartment = {
   _id: string;
   title: string;
+  approved: string;
   description: string;
   location: string;
   rentAmount: number;
@@ -31,6 +32,7 @@ export type TUser = {
 };
 export interface Property {
   available: boolean;
+  approved: string;
   bedrooms: number;
   createdAt: string;
   description: string;
@@ -73,4 +75,8 @@ export interface UpdateUserPayload {
   oldPassword: string;
   newPassword?: string;
   newEmail?: string;
+}
+export interface UpdateUser {
+  email?: string;
+  username?: string;
 }

@@ -46,7 +46,7 @@ const PropertyDetails = ({ house, id }: { house: any; id: string }) => {
     };
 
     const res = await rentRequestAction(rentalData);
-    console.log(res.errorSource[0].message);
+
     try {
       if (res?.success) {
         toast.success(res?.message || "Request successful!");
@@ -54,7 +54,7 @@ const PropertyDetails = ({ house, id }: { house: any; id: string }) => {
         setLoading(false);
       } else {
         setLoading(false);
-        toast.error(res.errorSource[0].message);
+        toast.error(res.errorSource[0]?.message);
       }
     } catch (error) {
       console.log(error);

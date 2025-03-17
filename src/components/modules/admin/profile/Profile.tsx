@@ -34,11 +34,21 @@ const Profile = ({ userInfo }: { userInfo: TUser }) => {
             </p>
 
             {/* Edit Button with Icon */}
-            <Link href={`/profile/${userInfo?._id}`}>
-              <Button className="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center gap-2">
-                <Edit size={18} /> Edit Profile
-              </Button>
-            </Link>
+            <div className="flex gap-3">
+              {/* Edit Profile Button */}
+
+              {/* Change Password Button */}
+              <Link href={`/profile/${userInfo?._id}`} className="w-1/2">
+                <Button className="mt-4 w-full text-white  gap-2 px-3">
+                  Change Password
+                </Button>
+              </Link>
+              <Link href={`/edit/${userInfo?._id}`} className="w-1/2">
+                <Button className="mt-4 w-full text-white flex items-center justify-center gap-2 px-3">
+                  <Edit size={18} /> Edit Profile
+                </Button>
+              </Link>
+            </div>
           </CardContent>
         </Card>
       </div>
