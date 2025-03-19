@@ -7,7 +7,7 @@ const ProfileEdit = async () => {
   const { data } = await alluser();
   const user = await getCurrentUser();
   const findUser = data.find((item: TUser) => item._id === user!.userId);
-  console.log(findUser, "eee");
+
   return (
     <div>
       <EditProfile user={findUser} />

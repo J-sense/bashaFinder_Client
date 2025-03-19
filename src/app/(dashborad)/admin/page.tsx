@@ -7,7 +7,6 @@ import Link from "next/link";
 const Dashboard = async () => {
   const { data } = await alluser();
   const { data: houses } = await getAllHouseAction();
-  console.log(houses);
 
   return (
     <div className="min-h-screen bg-white text-gray-900 p-6 ">

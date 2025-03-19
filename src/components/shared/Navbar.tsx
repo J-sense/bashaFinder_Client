@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { LogOut, Menu, X } from "lucide-react";
+import { House, LogOut, Menu, X } from "lucide-react";
 import Link from "next/link";
 import {
   DropdownMenu,
@@ -68,7 +68,8 @@ export default function Navbar() {
         <div className="hidden md:flex items-center space-x-6">
           {user?.role == "landlord" && (
             <Link href={"/house-listing"}>
-              <Button className="bg-green-600 hover:bg-green-700 text-white font-semibold px-5 py-2 rounded-lg shadow-md">
+              <Button variant="default">
+                <House />
                 House Listing
               </Button>
             </Link>
@@ -161,9 +162,12 @@ export default function Navbar() {
             Contact
           </Link>
           {user?.role == "landlord" && (
-            <Button className="bg-green-600 hover:bg-green-700 text-white w-4/5 text-lg font-semibold py-2 rounded-lg">
-              House Listing
-            </Button>
+            <Link href={"/house-listing"}>
+              <Button variant="default">
+                <House />
+                House Listing
+              </Button>
+            </Link>
           )}
           {user ? (
             <DropdownMenu>
@@ -183,9 +187,9 @@ export default function Navbar() {
                 <DropdownMenuItem className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
                   Profile
                 </DropdownMenuItem>
-                <DropdownMenuItem className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                {/* <DropdownMenuItem className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
                   Billing
-                </DropdownMenuItem>
+                </DropdownMenuItem> */}
                 <DropdownMenuItem className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
                   <Link href={`/${user.role}`}>Dashboard</Link>
                 </DropdownMenuItem>

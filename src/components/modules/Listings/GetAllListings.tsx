@@ -76,10 +76,11 @@ const GetAllListings = ({ houses }: { houses: Apartment[] }) => {
     <div>
       <div className="flex justify-between mb-5 items-center">
         <h1 className="text-3xl font-bold text-black">All House Listing</h1>
-        <Link href={`/house-listing`}></Link>
-        <Button variant="default">
-          Add a <House />
-        </Button>
+        <Link href="/house-listing">
+          <Button variant="default">
+            Add a <House />
+          </Button>
+        </Link>
       </div>
       <BTable columns={columns} data={houses} />
 

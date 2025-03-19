@@ -10,7 +10,7 @@ const EditPage = async ({
   const { listingId } = await params;
   const { data } = await allListings();
   const findProduct = data.find((pr: Apartment) => pr._id == listingId);
-  console.log(findProduct);
+
   return (
     <div className="my-24">
       <UpdateHouseForm id={listingId} house={findProduct} />
