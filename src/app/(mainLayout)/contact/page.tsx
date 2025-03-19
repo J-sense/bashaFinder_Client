@@ -1,4 +1,5 @@
 "use client";
+import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { Facebook, Twitter, Linkedin, Github } from "lucide-react";
 
@@ -23,21 +24,21 @@ export default function ContactPage() {
         <input
           type="text"
           placeholder="Your Name"
-          className="w-full p-4 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full p-4 mb-4 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <input
           type="email"
           placeholder="Your Email"
-          className="w-full p-4 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full p-4 mb-4 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <textarea
           placeholder="Your Message"
           rows={4}
-          className="w-full p-4 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full p-4 mb-4 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         ></textarea>
-        <button className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-all text-lg font-semibold">
+        <Button variant="default" className="w-full">
           Send Message
-        </button>
+        </Button>
       </motion.form>
 
       <motion.div
