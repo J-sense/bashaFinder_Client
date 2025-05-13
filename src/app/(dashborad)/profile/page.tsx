@@ -8,7 +8,7 @@ const page = async () => {
 
   const user = await getCurrentUser();
 
-  const findUser = data.find((item: TUser) => item._id === user.userId);
+  const findUser = data.find((item: TUser) => item?._id === user?.userId);
 
   return (
     <div>

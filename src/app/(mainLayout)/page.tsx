@@ -1,6 +1,10 @@
+import FAQAccordion from "@/components/modules/home/FAQAccordion";
+import FeedbackSection from "@/components/modules/home/FeedbackSection";
 import HeroSection from "@/components/modules/home/herosection/HeroSection";
 import Property from "@/components/modules/home/property/Property";
-import Recomandation from "@/components/modules/home/recomandation/Recomandation";
+import Recommendation from "@/components/modules/home/recomandation/Recomandation";
+import RentalProcess from "@/components/modules/home/RentalProcess";
+// import Recomandation from "@/components/modules/home/recomandation/Recomandation";
 import Why from "@/components/modules/home/why/Why";
 import { AllHouseAction } from "@/services/landlord";
 
@@ -10,9 +14,12 @@ const HomePage = async () => {
   return (
     <div className="min-h-screen pt-10">
       <HeroSection />
-      <Recomandation />
+      <Recommendation />
       <Property houses={data} />
       <Why />
+      <RentalProcess />
+      <FeedbackSection />
+      <FAQAccordion />
     </div>
   );
 };

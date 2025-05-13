@@ -26,192 +26,256 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-white shadow-lg fixed w-full z-50 border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-        {/* Logo */}
-        <Link
-          href="/"
-          className="text-3xl font-extrabold text-black tracking-wide "
-        >
-          BashaFinder
-        </Link>
-
-        {/* Desktop Nav */}
-        <div className="hidden md:flex space-x-8 text-lg font-medium text-gray-700">
-          <Link
-            href="/"
-            className="hover:text-blue-600 transition duration-300"
-          >
-            Home
-          </Link>
-          <Link
-            href="/about"
-            className="hover:text-blue-600 transition duration-300"
-          >
-            About
-          </Link>
-          <Link
-            href="/listings"
-            className="hover:text-blue-600 transition duration-300"
-          >
-            Listings
-          </Link>
-          <Link
-            href="/contact"
-            className="hover:text-blue-600 transition duration-300"
-          >
-            Contact
-          </Link>
-        </div>
-
-        {/* Profile & House Listing Button */}
-        <div className="hidden md:flex items-center space-x-6">
-          {user?.role == "landlord" && (
-            <Link href={"/house-listing"}>
-              <Button variant="default">
-                <House />
-                House Listing
-              </Button>
+    <nav className="bg-white border-b border-gray-100 shadow-sm fixed w-full z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-16 items-center">
+          {/* Logo and Desktop Nav */}
+          <div className="flex items-center">
+            <Link href="/" className="flex-shrink-0">
+              <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
+                BashaFinder
+              </span>
             </Link>
-          )}
-          {user ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <Avatar className="border-2 border-blue-500">
-                  <AvatarImage src="https://github.com/shadcn.png" />
-                  <AvatarFallback>
-                    {user?.role?.charAt(0) || "U"}
-                  </AvatarFallback>
-                </Avatar>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="shadow-lg rounded-md py-2 w-48">
-                <DropdownMenuLabel className="font-semibold px-4">
-                  My Account
-                </DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <Link href={"/profile"}>
-                  <DropdownMenuItem className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                    Profile
-                  </DropdownMenuItem>
-                </Link>
-                {/* <DropdownMenuItem className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                  Billing
-                </DropdownMenuItem> */}
-                <DropdownMenuItem className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                  <Link href={`/${user.role}`}>Dashboard</Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  className="text-red-500 cursor-pointer px-4 py-2 hover:bg-red-100"
-                  onClick={handleLogOut}
+
+            {/* Desktop Navigation */}
+            <div className="hidden md:ml-10 md:flex md:space-x-8">
+              <Link
+                href="/"
+                className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+              >
+                Home
+              </Link>
+              <Link
+                href="/about"
+                className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+              >
+                About
+              </Link>
+              <Link
+                href="/listings"
+                className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+              >
+                Listings
+              </Link>
+              <Link
+                href="/contact"
+                className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+              >
+                Contact
+              </Link>
+            </div>
+          </div>
+
+          {/* Right side - Desktop */}
+          <div className="hidden md:flex items-center space-x-4">
+            {user?.role === "landlord" && (
+              <Link href="/house-listing">
+                <Button
+                  variant="outline"
+                  className="flex items-center space-x-2 border-blue-500 text-blue-600 hover:bg-blue-50"
                 >
-                  <div className="flex text-base items-center gap-2">
-                    <LogOut /> <span>Log Out</span>
-                  </div>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          ) : (
-            <Link
-              href="/login"
-              // className="bg-blue-600 text-white font-semibold px-5 py-2 rounded-lg transition hover:bg-blue-700 shadow-md"
-            >
-              <Button variant="default">Login</Button>
-            </Link>
-          )}
-        </div>
+                  <House className="h-4 w-4" />
+                  <span>List Property</span>
+                </Button>
+              </Link>
+            )}
 
-        {/* Mobile Menu Button */}
-        <button
-          className="md:hidden focus:outline-none"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          {isOpen ? (
-            <X size={30} className="text-gray-700" />
-          ) : (
-            <Menu size={30} className="text-gray-700" />
-          )}
-        </button>
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger className="focus:outline-none">
+                  <div className="flex items-center space-x-2">
+                    <Avatar className="h-8 w-8 border border-blue-100">
+                      <AvatarImage src="https://github.com/shadcn.png" />
+                      <AvatarFallback className="bg-blue-100 text-blue-600">
+                        {user?.email?.charAt(0)?.toUpperCase() || "U"}
+                      </AvatarFallback>
+                    </Avatar>
+                    <span className="hidden lg:inline text-sm font-medium text-gray-700">
+                      {user.email}
+                    </span>
+                  </div>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  align="end"
+                  className="w-56 rounded-lg shadow-lg border border-gray-100 mt-2"
+                >
+                  <DropdownMenuLabel className="px-4 py-2 font-medium text-gray-900">
+                    My Account
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator className="bg-gray-100" />
+                  <Link href="/profile">
+                    <DropdownMenuItem className="px-4 py-2 text-sm cursor-pointer hover:bg-gray-50">
+                      Profile
+                    </DropdownMenuItem>
+                  </Link>
+                  <Link href={`/${user.role}`}>
+                    <DropdownMenuItem className="px-4 py-2 text-sm cursor-pointer hover:bg-gray-50">
+                      Dashboard
+                    </DropdownMenuItem>
+                  </Link>
+                  <DropdownMenuSeparator className="bg-gray-100" />
+                  <DropdownMenuItem
+                    onClick={handleLogOut}
+                    className="px-4 py-2 text-sm cursor-pointer text-red-600 hover:bg-red-50"
+                  >
+                    <div className="flex items-center space-x-2">
+                      <LogOut className="h-4 w-4" />
+                      <span>Sign out</span>
+                    </div>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <div className="flex space-x-2">
+                <Link href="/login">
+                  <Button
+                    variant="ghost"
+                    className="text-gray-700 hover:bg-gray-50"
+                  >
+                    Log in
+                  </Button>
+                </Link>
+                <Link href="/register">
+                  <Button className="bg-blue-600 hover:bg-blue-700">
+                    Sign up
+                  </Button>
+                </Link>
+              </div>
+            )}
+          </div>
+
+          {/* Mobile menu button */}
+          <div className="md:hidden flex items-center">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-100 focus:outline-none transition duration-150 ease-in-out"
+            >
+              {isOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
+            </button>
+          </div>
+        </div>
       </div>
 
-      {/* Mobile Nav */}
+      {/* Mobile Navigation */}
       {isOpen && (
-        <div className="md:hidden bg-white shadow-md flex flex-col items-center space-y-6 py-6 text-lg font-medium">
-          <Link
-            href="/"
-            className="hover:text-blue-600 transition duration-300"
-          >
-            Home
-          </Link>
-          <Link
-            href="/about"
-            className="hover:text-blue-600 transition duration-300"
-          >
-            About
-          </Link>
-          <Link
-            href="/listings"
-            className="hover:text-blue-600 transition duration-300"
-          >
-            Listings
-          </Link>
-          <Link
-            href="/contact"
-            className="hover:text-blue-600 transition duration-300"
-          >
-            Contact
-          </Link>
-          {user?.role == "landlord" && (
-            <Link href={"/house-listing"}>
-              <Button variant="default">
-                <House />
-                House Listing
-              </Button>
-            </Link>
-          )}
-          {user ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <Avatar className="border-2 border-blue-500">
-                  <AvatarImage src="https://github.com/shadcn.png" />
-                  <AvatarFallback>
-                    {user?.email?.charAt(0) || "U"}
-                  </AvatarFallback>
-                </Avatar>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="shadow-lg rounded-md py-2 w-48">
-                <DropdownMenuLabel className="font-semibold px-4">
-                  My Account
-                </DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                  Profile
-                </DropdownMenuItem>
-                {/* <DropdownMenuItem className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                  Billing
-                </DropdownMenuItem> */}
-                <DropdownMenuItem className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                  <Link href={`/${user.role}`}>Dashboard</Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  className="text-red-500 cursor-pointer px-4 py-2 hover:bg-red-100"
-                  onClick={handleLogOut}
-                >
-                  <div className="flex text-base items-center gap-2">
-                    <LogOut /> <span>Log Out</span>
-                  </div>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          ) : (
+        <div className="md:hidden bg-white shadow-lg">
+          <div className="pt-2 pb-3 space-y-1 px-4">
             <Link
-              href="/login"
-              className="bg-blue-600 text-white font-semibold px-5 py-2 rounded-lg transition hover:bg-blue-700 shadow-md"
+              href="/"
+              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50"
+              onClick={() => setIsOpen(false)}
             >
-              Login
+              Home
             </Link>
-          )}
+            <Link
+              href="/about"
+              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50"
+              onClick={() => setIsOpen(false)}
+            >
+              About
+            </Link>
+            <Link
+              href="/listings"
+              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50"
+              onClick={() => setIsOpen(false)}
+            >
+              Listings
+            </Link>
+            <Link
+              href="/contact"
+              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50"
+              onClick={() => setIsOpen(false)}
+            >
+              Contact
+            </Link>
+          </div>
+          <div className="pt-4 pb-3 border-t border-gray-200 px-4">
+            {user ? (
+              <>
+                {user.role === "landlord" && (
+                  <div className="mb-4">
+                    <Link
+                      href="/house-listing"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <Button
+                        variant="outline"
+                        className="w-full flex items-center justify-center space-x-2 border-blue-500 text-blue-600 hover:bg-blue-50"
+                      >
+                        <House className="h-4 w-4" />
+                        <span>List Property</span>
+                      </Button>
+                    </Link>
+                  </div>
+                )}
+                <div className="flex items-center px-4 mb-4">
+                  <div className="flex-shrink-0">
+                    <Avatar className="h-10 w-10 border border-blue-100">
+                      <AvatarImage src="https://github.com/shadcn.png" />
+                      <AvatarFallback className="bg-blue-100 text-blue-600">
+                        {user?.email?.charAt(0)?.toUpperCase() || "U"}
+                      </AvatarFallback>
+                    </Avatar>
+                  </div>
+                  <div className="ml-3">
+                    <div className="text-base font-medium text-gray-800">
+                      {user.email}
+                    </div>
+                    <div className="text-sm font-medium text-gray-500">
+                      {user.email}
+                    </div>
+                  </div>
+                </div>
+                <div className="space-y-1">
+                  <Link
+                    href="/profile"
+                    onClick={() => setIsOpen(false)}
+                    className="block px-4 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md"
+                  >
+                    Profile
+                  </Link>
+                  <Link
+                    href={`/${user.role}`}
+                    onClick={() => setIsOpen(false)}
+                    className="block px-4 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md"
+                  >
+                    Dashboard
+                  </Link>
+                  <button
+                    onClick={() => {
+                      handleLogOut();
+                      setIsOpen(false);
+                    }}
+                    className="w-full text-left px-4 py-2 text-base font-medium text-red-600 hover:bg-red-50 rounded-md flex items-center space-x-2"
+                  >
+                    <LogOut className="h-4 w-4" />
+                    <span>Sign out</span>
+                  </button>
+                </div>
+              </>
+            ) : (
+              <div className="space-y-2">
+                <Link
+                  href="/login"
+                  onClick={() => setIsOpen(false)}
+                  className="w-full block px-4 py-2 text-center text-base font-medium text-blue-600 hover:bg-blue-50 rounded-md border border-blue-600"
+                >
+                  Log in
+                </Link>
+                <Link
+                  href="/register"
+                  onClick={() => setIsOpen(false)}
+                  className="w-full block px-4 py-2 text-center text-base font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md shadow-sm"
+                >
+                  Sign up
+                </Link>
+              </div>
+            )}
+          </div>
         </div>
       )}
     </nav>

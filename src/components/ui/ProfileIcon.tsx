@@ -12,11 +12,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { LogOut } from "lucide-react";
+import { redirect } from "next/navigation";
 const ProfileIcon = () => {
   const { user, setIsLoading } = useUser();
   const handleLogOut = () => {
     LogOutAction();
     setIsLoading(true);
+    redirect("/");
   };
   return (
     <div>
@@ -40,9 +42,9 @@ const ProfileIcon = () => {
           {/* <DropdownMenuItem className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
                   Billing
                 </DropdownMenuItem> */}
-          <DropdownMenuItem className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+          {/* <DropdownMenuItem className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
             <Link href={`/${user?.role}`}>Dashboard</Link>
-          </DropdownMenuItem>
+          </DropdownMenuItem> */}
           <DropdownMenuSeparator />
           <DropdownMenuItem
             className="text-red-500 cursor-pointer px-4 py-2 hover:bg-red-100"

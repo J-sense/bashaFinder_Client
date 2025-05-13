@@ -1,37 +1,104 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import recomandation from "@/assests/reomandation.jpg";
+import recommendation from "@/assests/reomandation.jpg";
+import { ArrowRight, Home, Star, CheckCircle } from "lucide-react";
 
-const Recomandation = () => {
+const Recommendation = () => {
   return (
-    <div className="container mx-auto px-6 py-16">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-        {/* Text Section */}
-        <div className="flex flex-col space-y-4 text-center md:text-left">
-          <h1 className="text-3xl md:text-4xl font-bold text-black uppercase">
-            Get Home Recommendations
-          </h1>
-          <h3 className="text-base md:text-lg text-zinc-600 uppercase">
-            Sign in for a more personalized experience.
-          </h3>
-          <div className="flex justify-center md:justify-start">
-            <Button variant="default">Sign in</Button>
+    <section className="bg-gradient-to-r from-blue-50 to-indigo-50 py-12 md:py-16 px-4 sm:px-6">
+      <div className="max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
+          {/* Text Content */}
+          <div className="space-y-5 order-2 lg:order-1">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
+                Smart Home Recommendations
+              </span>
+            </h2>
+
+            <p className="text-base md:text-lg text-gray-600">
+              Sign in to get property matches tailored to your lifestyle and
+              preferences.
+            </p>
+
+            <div className="space-y-3">
+              <div className="flex items-start gap-3">
+                <CheckCircle className="flex-shrink-0 h-5 w-5 text-green-500 mt-1" />
+                <div>
+                  <h4 className="font-medium text-gray-900">
+                    Personalized Matches
+                  </h4>
+                  <p className="text-gray-600 text-sm">
+                    Properties selected just for you
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <Star className="flex-shrink-0 h-5 w-5 text-yellow-500 mt-1" />
+                <div>
+                  <h4 className="font-medium text-gray-900">Early Access</h4>
+                  <p className="text-gray-600 text-sm">
+                    See new listings before others
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <Home className="flex-shrink-0 h-5 w-5 text-blue-500 mt-1" />
+                <div>
+                  <h4 className="font-medium text-gray-900">
+                    Saved Preferences
+                  </h4>
+                  <p className="text-gray-600 text-sm">
+                    Your ideal home criteria remembered
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-3 pt-2">
+              <Button className="px-6 py-4 text-base bg-blue-600 hover:bg-blue-700">
+                Sign In <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+              <Button variant="outline" className="px-6 py-4 text-base">
+                Learn More
+              </Button>
+            </div>
+          </div>
+
+          {/* Image - Better Proportion */}
+          <div className="relative order-1 lg:order-2">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-xl shadow-md">
+              <Image
+                src={recommendation}
+                alt="Personalized recommendations"
+                fill
+                className="object-cover"
+                quality={90}
+                priority
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-black/5 to-transparent" />
+            </div>
+
+            {/* Smaller decorative element */}
+            <div className="absolute -bottom-3 -right-3 bg-white p-2 rounded-lg shadow-sm border border-gray-100 hidden lg:block">
+              <div className="flex items-center gap-2">
+                <div className="bg-green-100 p-1.5 rounded-full">
+                  <CheckCircle className="h-4 w-4 text-green-600" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium">2,341+</p>
+                  <p className="text-xs text-gray-500">Matches Made</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-
-        {/* Image Section */}
-        <div className="flex justify-center">
-          <Image
-            src={recomandation}
-            height={500}
-            width={500}
-            alt="Recommendation"
-            className="w-full max-w-[400px] md:max-w-[500px] rounded-lg shadow-lg object-cover"
-          />
-        </div>
       </div>
-    </div>
+    </section>
   );
 };
 
-export default Recomandation;
+export default Recommendation;
